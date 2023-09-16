@@ -1,3 +1,7 @@
+import sys
+sys.path.append('srv/freshnessmodel/src')
+import utils
+                
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
@@ -35,25 +39,43 @@ for i in range(1, cols * rows + 1):
     plt.imshow(img.squeeze(), cmap="gray")
 plt.show()
 
-# Creates a class for the convolutional neural network inheriting from the pytorch library
-
 # Get cpu or gpu device for training.
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print("Using {} device".format(device))
 
-# Define model
+# Creates a class for the convolutional neural network inheriting from the pytorch library
+
+# Define model - takes input as 144*144*3
 class NeuralNetwork(nn.Module):
     def __init__(self):
         super(NeuralNetwork, self).__init__()
-        self.flatten = nn.Flatten()
-        self.linear_relu_stack = nn.Sequential(
-            nn.Linear(28*28, 512),
+        self.network = nn.Sequential(
+            
+            nn.Conv2d(3, 32, kernel_size = 3, padding = 1),
             nn.ReLU(),
-            nn.Linear(512, 512),
+            nn.Conv2d(32,64, kernel_size = 3, stride = 1, padding = 1),
             nn.ReLU(),
-            nn.Linear(512, 10),
-            nn.ReLU()
-        )
+            nn.MaxPool2d(2,2),
+        
+            nn.Conv2d(64, 128, kernel_size = 3, stride = 1, padding = 1),
+            nn.ReLU(),
+            nn.Conv2d(128 ,128, kernel_size = 3, stride = 1, padding = 1),
+            nn.ReLU(),
+            nn.MaxPool2d(2,2),
+            
+            nn.Conv2d(128, 256, kernel_size = 3, stride = 1, padding = 1),
+            nn.ReLU(),
+            nn.Conv2d(256,256, kernel_size = 3, stride = 1, padding = 1),
+            nn.ReLU(),
+            nn.MaxPool2d(2,2),
+            
+            nn.Flatten(),
+            nn.Linear(82944,1024),
+            nn.ReLU(),
+            nn.Linear(1024, 512),
+            nn.ReLU(),
+            nn.Linear(512,6)
+        ) 
       
     def forward(self, x):
         x = self.flatten(x)
@@ -72,7 +94,7 @@ learning_rate = 1e-3
 optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 
 
-# Makes predictions on data and uses prediction loss to modify model parameters
+# Makes predictions on data and uses prediction error to modify model parameters
 
 
 def train(dataloader, model, loss_fn, optimizer):
@@ -126,14 +148,14 @@ print("Done!")
 # Saves model by serializing to an internal state dictionary
 
 
-torch.save(model.state_dict(), "data/model.pth")
+torch.save(model.state_dict(), "/srv/freshnessmodel")
 print("Saved PyTorch Model State to model.pth")
 
 
 # Loads model from saved dictionary
 
 model = NeuralNetwork()
-model.load_state_dict(torch.load("data/model.pth"))
+model.load_state_dict(torch.load("/srv/freshnessmodel"))
 
 
 # Initialize possible classes corresponding to redp
