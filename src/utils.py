@@ -4,6 +4,7 @@ import torch
 import importlib.util
 import matplotlib.pyplot as plt
 from torch import nn
+from utils import load_images_as_tensors
 import sys
 sys.path.append('./models')
 module_spec = importlib.util.spec_from_file_location("cnn", "./models")
