@@ -4,7 +4,7 @@ import utils
 
 from flask import Flask, jsonify
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
 
 # Configure the database connection URI
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://davidjdeg2@Snowden37606!@70.161.68.15/Website_DB'
