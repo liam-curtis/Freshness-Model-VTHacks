@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader #
 from torchvision import datasets #
 from torchvision.transforms import ToTensor, Lambda, Compose #
 import sys
-sys.path.append('/srv/freshnessmodel/models')
+ys.path.append('srv/freshnessmodel/Freshness-Model-VTHacks/src')
 import cnn
 
 def display_sample_data(test_data):
