@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, url_for, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 import sys
-sys.path.append('srv/freshnessmodel/Freshness-Model-VTHacks/src/models')
+sys.path.append('srv/freshnessmodel/Freshness-Model-VTHacks/src')
 import utils
 
 app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
