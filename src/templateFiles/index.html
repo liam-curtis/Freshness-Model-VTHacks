@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--  Load CSS in Flask with html-->
-    <link rel="stylesheet" href='/staticFiles/main.css' />
- 
-<!--  Load JavaScript in Flask with html-->
-  <script>
-    alert("Page has been loaded successfully")
-  </script>
- 
-  </head>
-  <body>
-    <h1>Flask Template tutorial</h1>
-    <p>Integrating HTML, CSS and Javascript in Flask Web Framework</p>
-  </body>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <div>
+        <a href = "http://127.0.0.1:5000/login" target=_self title="This take you to login page">
+            Login here
+        </a>
+    </div>
+    <div>
+        <a href = "http://127.0.0.1:5000/about_us" target="_self">
+            Read about us
+        </a>
+    </div>
+    <h1>Upload a file</h1>
+
+    <form method='POST' enctype='multipart/form-data'>
+        {{form.hidden_tag()}}
+        {{form.file()}}
+        {{form.submit()}}
+    </form>
+</body>
 </html>
