@@ -1,5 +1,5 @@
 import sys
-sys.path.append('srv/freshnessmodel/src')
+sys.path.append('srv/freshnessmodel/Freshness-Model-VTHacks/src')
 import utils
 
 from flask import Flask, jsonify
