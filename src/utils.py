@@ -1,6 +1,9 @@
 import torch
 import matplotlib.pyplot as plt
 from torch import nn
+from torch.utils.data import DataLoader #
+from torchvision import datasets #
+from torchvision.transforms import ToTensor, Lambda, Compose #
 sys.path.append('/srv/freshnessmodel/models')
 import cnn
 
@@ -35,11 +38,21 @@ def get_optimizer(model, learning_rate=1e-3):
     return torch.optim.SGD(model.parameters(), lr=learning_rate)
 
 def train_and_evaluate_cnn():
-    # Download training data from open datasets.
-    training_data = # ...
+   # Download training data from open datasets.
+training_data = datasets.FashionMNIST(
+    root="data",
+    train=True,
+    download=True,
+    transform=ToTensor(),
+)
 
-    # Download test data from open datasets.
-    test_data = # ...
+# Download test data from open datasets.
+test_data = datasets.FashionMNIST(
+    root="data",
+    train=False,
+    download=True,
+    transform=ToTensor(),
+)
 
     batch_size = 64
     train_dataloader = DataLoader(training_data, batch_size=batch_size)
