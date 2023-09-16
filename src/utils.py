@@ -14,6 +14,9 @@ def display_sample_data(test_data):
         plt.imshow(img.squeeze(), cmap="gray")
     plt.show()
 
+def get_variable_name(variable, local_vars):
+    return [name for name, value in local_vars.items() if value is variable][0]
+    
 def save_model(model, path):
     torch.save(model.state_dict(), path)
     print(f"Saved PyTorch Model State to {path}")
@@ -55,9 +58,11 @@ def train_and_evaluate_cnn():
         cnn.test(test_dataloader, model)
     print("Done!")
 
-    save_model(model, "/srv/freshnessmodel")
+    model_name = get_variable_name(model, locals())
+    path = f"/srv/freshnessmodel/{model_name}.pth"
+    torch.save(model.state_dict(), path)
 
     model = cnn.CNNModel()
-    load_model(model, "/srv/freshnessmodel")
+    load_model(model, path)
 
     return model
