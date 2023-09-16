@@ -1,12 +1,16 @@
 import torch
+import importlib.util
 import matplotlib.pyplot as plt
 from torch import nn
 from torch.utils.data import DataLoader #
 from torchvision import datasets #
 from torchvision.transforms import ToTensor, Lambda, Compose #
 import sys
-sys.path.append('srv/freshnessmodel/Freshness-Model-VTHacks/src')
-import cnn
+sys.path.append('./models')
+module_spec = importlib.util.spec_from_file_location("cnn", "./models")
+cnn = importlib.util.module_from_spec(module_spec)
+module_spec.loader.exec_module(cnn)
+##import cnn
 
 def display_sample_data(test_data):
     figure = plt.figure(figsize=(10, 8))
