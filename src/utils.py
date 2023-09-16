@@ -1,6 +1,8 @@
 import torch
 import matplotlib.pyplot as plt
 from torch import nn
+sys.path.append('/srv/freshnessmodel/models')
+import cnn
 
 def display_sample_data(test_data):
     figure = plt.figure(figsize=(10, 8))
@@ -17,7 +19,9 @@ def display_sample_data(test_data):
 def get_variable_name(variable, local_vars):
     return [name for name, value in local_vars.items() if value is variable][0]
     
-def save_model(model, path):
+def save_model(model):
+    model_name = get_variable_name(model, locals())
+    path = f"/srv/freshnessmodel/{model_name}.pth"
     torch.save(model.state_dict(), path)
     print(f"Saved PyTorch Model State to {path}")
 
@@ -60,7 +64,7 @@ def train_and_evaluate_cnn():
 
     model_name = get_variable_name(model, locals())
     path = f"/srv/freshnessmodel/{model_name}.pth"
-    torch.save(model.state_dict(), path)
+    save_model(model)
 
     model = cnn.CNNModel()
     load_model(model, path)
