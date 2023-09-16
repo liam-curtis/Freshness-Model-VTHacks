@@ -1,16 +1,16 @@
+import os
+from PIL import Image
 import torch
 import importlib.util
 import matplotlib.pyplot as plt
 from torch import nn
-from torch.utils.data import DataLoader #
-from torchvision import datasets #
-from torchvision.transforms import ToTensor, Lambda, Compose #
 import sys
 sys.path.append('./models')
 module_spec = importlib.util.spec_from_file_location("cnn", "./models")
 cnn = importlib.util.module_from_spec(module_spec)
 module_spec.loader.exec_module(cnn)
 ##import cnn
+
 
 def display_sample_data(test_data):
     figure = plt.figure(figsize=(10, 8))
@@ -24,40 +24,68 @@ def display_sample_data(test_data):
         plt.imshow(img.squeeze(), cmap="gray")
     plt.show()
 
+
 def get_variable_name(variable, local_vars):
     return [name for name, value in local_vars.items() if value is variable][0]
-    
+
+
 def save_model(model):
     model_name = get_variable_name(model, locals())
     path = f"/srv/freshnessmodel/{model_name}.pth"
     torch.save(model.state_dict(), path)
     print(f"Saved PyTorch Model State to {path}")
 
+
 def load_model(model, path):
     model.load_state_dict(torch.load(path))
+
 
 def get_loss_fn():
     return nn.CrossEntropyLoss()
 
+
 def get_optimizer(model, learning_rate=1e-3):
     return torch.optim.SGD(model.parameters(), lr=learning_rate)
 
+def load_images_as_tensors(directory, base_path="."):
+    # Define the transformation pipeline for the images
+    transform = transforms.Compose([
+        transforms.Resize((144, 144)),  # Resize to 144x144
+        transforms.ToTensor(),
+        # Add any other transformations you need
+    ])
+
+    # Fruit categories
+    categories = ['freshapples', 'freshbanana', 'freshcucumber', 'freshokra', 'freshoranges', 
+                  'freshpotato', 'freshtomato', 'rottenapples', 'rottenbanana', 'rottencucumber', 
+                  'rottenokra', 'rottenoranges', 'rottenpotato', 'rottentomato']
+
+    data = {category: [] for category in categories}
+
+    for category in categories:
+        # Construct the path to the category directory
+        category_dir = os.path.join(base_path, directory, category)
+        
+        # Iterate through each image in the category directory
+        for image_name in os.listdir(category_dir):
+            image_path = os.path.join(category_dir, image_name)
+            
+            # Open and transform the image
+            image = Image.open(image_path)
+            tensor_image = transform(image)
+            
+            # Append the tensor to the appropriate list
+            data[category].append(tensor_image)
+
+    return data
+
+
 def train_and_evaluate_cnn():
     # Download training data from open datasets.
-    training_data = datasets.FashionMNIST(
-    root="data",
-    train=True,
-    download=True,
-    transform=ToTensor(),
-    )
+    training_data = load_images_as_tensors('/srv/freshnessmodel/dataset/Train')
 
     # Download test data from open datasets.
-    test_data = datasets.FashionMNIST(
-    root="data",
-    train=False,
-    download=True,
-    transform=ToTensor(),
-    )
+    test_data = load_images_as_tensors('/srv/freshnessmodel/dataset/Test')
 
     batch_size = 64
     train_dataloader = DataLoader(training_data, batch_size=batch_size)
