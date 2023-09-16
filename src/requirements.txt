@@ -1,3 +1,6 @@
 # Python packages
 matplotlib==3.8.0
 torch==2.0.0
+torchvisions==0.15.2
+flask==2.3.3
+sqlalchemy==2.0.20
