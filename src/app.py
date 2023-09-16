@@ -1,6 +1,6 @@
 import sys
 sys.path.append('srv/freshnessmodel/Freshness-Model-VTHacks/src')
-from utils import train_and_evaluate, load_images_as_tensors
+from utils import train_and_evaluate
 
 app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
 
