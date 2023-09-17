@@ -75,21 +75,27 @@ def load_images_as_tensors(directory, base_path="."):
 
     data = {category: [] for category in categories}
 
-    for category in os.listdir(base_path):
+    for category in categories:
         # Construct the path to the category directory
-        category_dir = os.path.join(base_path, directory)
-        
-        # Iterate through each image in the category directory
+        category_dir = os.path.join(base_path, directory, category)
+    
         for image_name in os.listdir(category_dir):
             image_path = os.path.join(category_dir, image_name)
         
+            # Read the image using PIL
+            pil_image = Image.open(image_path)
+
+            # If the image has an alpha channel (is RGBA), convert it to RGB
+            if pil_image.mode == 'RGBA':
+                pil_image = pil_image.convert('RGB')
+            tensor_image = transformations(pil_image)
+        
             # Append the tensor to the appropriate list
-            if "rotten" in category_dir:
-                data[2].append(tensor_image)
+            if "rotten" in category:
+                data[0].append(tensor_image)
             else:
                 data[1].append(tensor_image)
-
-    return data
+        return data
 
 
 
