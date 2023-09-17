@@ -159,7 +159,7 @@ def train_and_evaluate_cnn():
     print(model)
 
     loss_fn = get_loss_fn()
-    learning_rate = 1.5e-3
+    learning_rate = 1e-3
     optimizer = get_optimizer(model, learning_rate)
 
     epochs = 7
