@@ -145,6 +145,6 @@ def train_and_evaluate_cnn():
     save_model(model)
 
     model = cnn.CNNModel()
-    load_model(model, path)
+    #load_model(model, path)
 
     return model
