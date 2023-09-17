@@ -69,14 +69,6 @@ def display_sample_data(test_data):
 def get_variable_name(variable, local_vars):
     return [name for name, value in local_vars.items() if value is variable][0]
 
-
-def save_model(model):
-    model_name = get_variable_name(model, locals())
-    path = f"/srv/freshnessmodel/model.pth"
-    torch.save(model.state_dict(), path)
-    print(f"Saved PyTorch Model State to {path}")
-
-
 def load_model(model, path):
     model.load_state_dict(torch.load(path))
 
@@ -178,9 +170,6 @@ def train_and_evaluate_cnn():
     print("Done!")
 
     path = "/srv/freshnessmodel/VTHacks/model.pth"
-    save_model(model)
-
-    #model = cnn.CNNModel()
-    #load_model(model, path)
+    torch.save(model, path)
 
     return model
