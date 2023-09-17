@@ -148,7 +148,7 @@ def train_and_evaluate_cnn():
     test_data = load_images_as_tensors('Test', '/srv/freshnessmodel/dataset')
     test_data = CustomDataset(test_data)
 
-    batch_size = 256
+    batch_size = 128
     train_dataloader = DataLoader(training_data, batch_size=batch_size)
     test_dataloader = DataLoader(test_data, batch_size=batch_size)
 
