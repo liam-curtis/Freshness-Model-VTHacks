@@ -47,7 +47,7 @@ def train(dataloader, model, loss_fn, optimizer, device):
 
 # Check model performance against test dataset
 
-def test(dataloader, model, device):
+def test(dataloader, model, loss_fn, device):
     size = len(dataloader.dataset)
     model.eval()
     test_loss, correct = 0, 0
