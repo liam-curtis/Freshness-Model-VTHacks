@@ -4,6 +4,7 @@ import torch
 import importlib.util
 import matplotlib.pyplot as plt
 from torch import nn
+from torchvision import transforms
 import sys
 sys.path.append('./models')
 module_spec = importlib.util.spec_from_file_location("cnn", "./models/cnn.py")
