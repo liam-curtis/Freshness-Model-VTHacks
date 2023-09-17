@@ -16,9 +16,12 @@ module_spec.loader.exec_module(cnn)
 class CustomDataset(Dataset):
     def __init__(self, data):
         self.data = []
+        self.categories = ['freshapples', 'freshbanana', ...]  # list all categories
         for category, tensors in data.items():
             for tensor in tensors:
-                self.data.append((tensor, category))
+                label = self.categories.index(category)
+                self.data.append((tensor, label))
+
 
     def __len__(self):
         return len(self.data)
