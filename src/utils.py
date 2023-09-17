@@ -29,6 +29,30 @@ class CustomDataset(Dataset):
     def __getitem__(self, idx):
         return self.data[idx]
 
+def predict_image(model, tensor_image, device="cpu"):
+
+    # Ensure the model is in evaluation mode
+    model.eval()
+
+    # Move the tensor image to the specified device
+    tensor_image = tensor_image.to(device)
+
+    # Add an extra batch dimension
+    tensor_image = tensor_image.unsqueeze(0)
+
+    # Forward pass
+    with torch.no_grad():
+        outputs = model(tensor_image)
+
+    # Get the predicted class index
+    _, predicted_class = torch.max(outputs, 1)
+
+    # Convert the class index to a string label
+    if predicted_class.item() == 0:
+        return "fresh"
+    else:
+        return "rotten"
+
 def display_sample_data(test_data):
     figure = plt.figure(figsize=(10, 8))
     cols, rows = 5, 5
@@ -66,7 +90,22 @@ def get_optimizer(model, learning_rate=2e-3):
 
 from torch.utils.data import Dataset
 
-        
+def load_image_as_tensor(image):
+    # Define the transformation pipeline for the images
+    transformations = transforms.Compose([
+        transforms.Resize((144, 144)),  # Resize to 144x144
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # Normalize
+    ])
+    #pil_image = Image.open(image_path)
+
+    # If the image has an alpha channel (is RGBA), convert it to RGB
+    if pil_image.mode == 'RGBA':
+        pil_image = pil_image.convert('RGB')
+    tensor_image = transformations(pil_image)
+            
+    return tensor_image
+
 def load_images_as_tensors(directory, base_path="."):
     # Define the transformation pipeline for the images
     transformations = transforms.Compose([
