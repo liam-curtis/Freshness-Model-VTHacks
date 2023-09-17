@@ -49,7 +49,7 @@ def get_optimizer(model, learning_rate=1e-3):
 
 def load_images_as_tensors(directory, base_path="."):
     # Define the transformation pipeline for the images
-    transform = transforms.Compose([
+    transformations = transforms.Compose([
         transforms.Resize((144, 144)),  # Resize to 144x144
         transforms.ToTensor(),
         # Add any other transformations you need
