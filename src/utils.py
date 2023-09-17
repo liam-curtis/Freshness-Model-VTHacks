@@ -17,13 +17,12 @@ module_spec.loader.exec_module(cnn)
 class CustomDataset(Dataset):
     def __init__(self, data):
         self.data = []
-        self.categories = ['freshapples', 'freshbanana', 'freshcucumber', 'freshokra', 'freshoranges', 
-                  'freshpotato', 'freshtomato', 'rottenapples', 'rottenbanana', 'rottencucumber', 
-                  'rottenokra', 'rottenoranges', 'rottenpotato', 'rottentomato']
+        self.categories = [1, 2]  # Numeric categories now
         for category, tensors in data.items():
+            label = self.categories.index(category)
             for tensor in tensors:
-                label = self.categories.index(category)
                 self.data.append((tensor, label))
+
 
 
     def __len__(self):
@@ -71,40 +70,27 @@ from torch.utils.data import Dataset
 
         
 def load_images_as_tensors(directory, base_path="."):
-    # Define the transformation pipeline for the images
-    transformations = transforms.Compose([
-        transforms.Resize((50, 50)),  # Resize to 144x144
-        transforms.ToTensor(),
-        # Add any other transformations you need
-    ])
-
-    # Fruit categories
-    categories = ['freshapples', 'freshbanana', 'freshcucumber', 'freshokra', 'freshoranges', 
-                  'freshpotato', 'freshtomato', 'rottenapples', 'rottenbanana', 'rottencucumber', 
-                  'rottenokra', 'rottenoranges', 'rottenpotato', 'rottentomato']
+    # Numeric categories corresponding to fresh or rotten
+    categories = [1, 2]
 
     data = {category: [] for category in categories}
 
-    for category in categories:
+    for category in os.listdir(base_path):
         # Construct the path to the category directory
         category_dir = os.path.join(base_path, directory, category)
         
         # Iterate through each image in the category directory
         for image_name in os.listdir(category_dir):
             image_path = os.path.join(category_dir, image_name)
-            
-             # Read the image using PIL
-            pil_image = Image.open(image_path)
-
-            # If the image has an alpha channel (is RGBA), convert it to RGB
-            if pil_image.mode == 'RGBA':
-                pil_image = pil_image.convert('RGB')
-            tensor_image = transformations(pil_image)
-            
+        
             # Append the tensor to the appropriate list
-            data[category].append(tensor_image)
+            if "rotten" in category_dir:
+                data[2].append(tensor_image)
+            else:
+                data[1].append(tensor_image)
 
     return data
+
 
 
 def train_and_evaluate_cnn():
