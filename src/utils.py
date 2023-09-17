@@ -73,7 +73,7 @@ def load_images_as_tensors(directory, base_path="."):
     # Numeric categories corresponding to fresh or rotten
     categories = [1, 2]
 
-    data = {category: [] for category in categories}
+    data = {'rotten': [], 'fresh': []}
 
     for category in categories:
         # Construct the path to the category directory
