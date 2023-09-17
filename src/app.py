@@ -1,5 +1,4 @@
 import sys
-sys.path.append('srv/freshnessmodel/Freshness-Model-VTHacks/src')
 from utils import train_and_evaluate
 
 
