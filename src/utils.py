@@ -1,10 +1,11 @@
 import os
 from PIL import Image
 import torch
-import importlib.util
-import matplotlib.pyplot as plt
 from torch import nn
 from torchvision import transforms
+from torch.utils.data import DataLoader
+import importlib.util
+import matplotlib.pyplot as plt
 import sys
 sys.path.append('./models')
 module_spec = importlib.util.spec_from_file_location("cnn", "./models/cnn.py")
