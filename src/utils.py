@@ -17,7 +17,9 @@ module_spec.loader.exec_module(cnn)
 class CustomDataset(Dataset):
     def __init__(self, data):
         self.data = []
-        self.categories = ['freshapples', 'freshbanana', ...]  # list all categories
+        categories = ['freshapples', 'freshbanana', 'freshcucumber', 'freshokra', 'freshoranges', 
+                  'freshpotato', 'freshtomato', 'rottenapples', 'rottenbanana', 'rottencucumber', 
+                  'rottenokra', 'rottenoranges', 'rottenpotato', 'rottentomato']
         for category, tensors in data.items():
             for tensor in tensors:
                 label = self.categories.index(category)
