@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./staticFiles/main.css">
     <title>RipeMind</title>
+    <style>
+        body {text-align:center}
+    </style>
 </head>
 <body>
+    <h1>RipeMind</h1>
     <div>
         <a href = "http://127.0.0.1:5000/login" target=_self title="This take you to login page">
             Login here
@@ -22,7 +26,10 @@
 
     <form method='POST' enctype='multipart/form-data'>
         {{form.hidden_tag()}}
+        <br />
         {{form.file()}}
+        <br />
+        <br />
         {{form.submit()}}
     </form>
 </body>

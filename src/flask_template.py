@@ -14,44 +14,15 @@ from sqlalchemy import text
 app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
 app.config['SECRET_KEY'] = 'supersecretkey'
 app.config['UPLOAD_FOLDER'] = 'testing'
-
-# @app.route('/')
-# def welcome():
-#     return "This is the home page of Flask Application"
  
 # Configure the database connection URI
 #db_password = os.environ.get('DATABASE_PASSWORD')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://davidjdeg2:Snowden37606!@70.161.68.15/Website_DB'
 
-# # Create a SQLAlchemy instance
+# Create a SQLAlchemy instance
 db = SQLAlchemy(app)
 app.app_context().push()
-#print(type(db))
 cursor = db.session.connection()
-
-# # Execute a simple SQL query
-try:  
-    query = text("SELECT * FROM User;")
-    result = db.session.execute(query)
-except Exception as e:
-    print(e)
-# # Fetch the results
-row = result.fetchall()
-user_data = [{'id': result[0], 'username': result[1], 'email': result[2]} for result in row]
-print(user_data)
-
-# #Close the curso
-
-# @app.route('/register', methods=['GET', 'POST'])
-# def registerUser():
-#     if request.method == 'POST':
-#         username = request.form['user']
-#         password = request.form['user_pass']
-#         email = request.form['mail']
-#         first_name = request.form['first_name']
-#         last_name = request.form['last_name']
-
-#     return render_template('login.html')
 
 class UploadFileForm(FlaskForm):
     file = FileField("File", validators=[InputRequired()])
@@ -61,6 +32,7 @@ class UploadFileForm(FlaskForm):
 @app.route('/home', methods=['GET',"POST"])
 def home():
     return render_template('index.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -73,7 +45,6 @@ def login():
         print(result)
 
         # Access the value of the output parameter directly
-        #unique_result[0]=1
         if result == 1:
             # Call the stored procedure to insert the user data into the database
             return redirect(url_for('upload'))  # Redirect to the login page after registration
@@ -81,6 +52,7 @@ def login():
             flash('Username or password is incorrect', 'danger')
 
     return render_template('login.html')
+
 @app.route('/upload', methods=['GET',"POST"])
 def upload():
     form = UploadFileForm()
@@ -89,12 +61,15 @@ def upload():
         file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename))) # Then save the file
         return render_template('success.html')
     return render_template('upload.html', form=form)
+
 @app.route('/about_us')
 def about_us():
     return render_template('about.html')
+
 @app.route('/success')
 def success():
     return render_template('success.html')
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -110,7 +85,6 @@ def register():
         print(result)
 
         # Access the value of the output parameter directly
-        #unique_result[0]=1
         if result == 1:
             # Call the stored procedure to insert the user data into the database
             insert_query = text('CALL InsertUserWithHashedPassword(:username, :password, :email, :first_name, :last_name);')
@@ -130,8 +104,8 @@ def register():
 
     return render_template('register.html')
 
-
 cursor.close()
+
 @app.route('/')
 def index():
     return render_template('index.html')
