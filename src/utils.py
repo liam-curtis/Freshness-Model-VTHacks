@@ -17,7 +17,7 @@ module_spec.loader.exec_module(cnn)
 class CustomDataset(Dataset):
     def __init__(self, data):
         self.data = []
-        self.categories = [1, 2]  # Numeric categories now
+        self.categories = ['fresh', 'rotten']  # Numeric categories now
         for category, tensors in data.items():
             label = self.categories.index(category)
             for tensor in tensors:
@@ -73,6 +73,7 @@ def load_images_as_tensors(directory, base_path="."):
     # Define the transformation pipeline for the images
     transformations = transforms.Compose([
         transforms.Resize((50, 50)),  # Resize to 144x144
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         transforms.ToTensor(),
         # Add any other transformations you need
     ])
