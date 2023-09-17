@@ -96,7 +96,8 @@ def load_images_as_tensors(directory, base_path="."):
 
             # Convert from RGBA to RGB
             rgb_image = cv2.cvtColor(image, cv2.COLOR_BGRA2RGB)
-            tensor_image = transformations(rgb_image)
+            l_image = Image.fromarray(rgb_image)
+            tensor_image = transformations(l_image)
             
             # Append the tensor to the appropriate list
             data[category].append(tensor_image)
