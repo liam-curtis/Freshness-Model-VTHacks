@@ -74,8 +74,7 @@ def load_images_as_tensors(directory, base_path="."):
     transformations = transforms.Compose([
         transforms.Resize((50, 50)),  # Resize to 144x144
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        transforms.ToTensor(),
-        # Add any other transformations you need
+        transforms.ToTensor()
     ])
 
     # Fruit categories
@@ -99,7 +98,7 @@ def load_images_as_tensors(directory, base_path="."):
             # If the image has an alpha channel (is RGBA), convert it to RGB
             if pil_image.mode == 'RGBA':
                 pil_image = pil_image.convert('RGB')
-            tensor_image = transformations(pil_image)
+            tensor_image = ToTensor(transformations(pil_image))
             
             # Append the tensor to the appropriate list
             if "rotten" in category:
