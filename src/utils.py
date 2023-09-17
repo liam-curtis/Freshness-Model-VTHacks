@@ -177,11 +177,10 @@ def train_and_evaluate_cnn():
         cnn.test(test_dataloader, model, loss_fn, device)
     print("Done!")
 
-    model_name = get_variable_name(model, locals())
-    path = f"/srv/freshnessmodel/VTHacks/{model_name}.pth"
+    path = "/srv/freshnessmodel/VTHacks/model.pth"
     save_model(model)
 
-    model = cnn.CNNModel()
-    load_model(model, path)
+    #model = cnn.CNNModel()
+    #load_model(model, path)
 
     return model
