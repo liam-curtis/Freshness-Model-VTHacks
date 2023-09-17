@@ -19,7 +19,7 @@ class CNNModel(nn.Module):
             nn.Flatten(),
             nn.Linear(3 * 3 * 32, 256),  # Adjusted based on the output size of the last conv layer
             nn.ReLU(),
-            nn.Linear(256, 6)
+            nn.Linear(256, 14)
         ) 
       
     def forward(self, x):
