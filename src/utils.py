@@ -73,7 +73,7 @@ from torch.utils.data import Dataset
 def load_images_as_tensors(directory, base_path="."):
     # Define the transformation pipeline for the images
     transformations = transforms.Compose([
-        transforms.Resize((144, 144)),  # Resize to 144x144
+        transforms.Resize((50, 50)),  # Resize to 144x144
         transforms.ToTensor(),
         # Add any other transformations you need
     ])
