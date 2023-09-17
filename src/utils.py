@@ -73,7 +73,7 @@ def load_images_as_tensors(directory, base_path="."):
             
             # Open and transform the image
             image = Image.open(image_path)
-            tensor_image = transform(image)
+            tensor_image = transformations(image)
             
             # Append the tensor to the appropriate list
             data[category].append(tensor_image)
