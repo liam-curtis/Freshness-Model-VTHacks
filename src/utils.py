@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from torch import nn
 import sys
 sys.path.append('./models')
-module_spec = importlib.util.spec_from_file_location("cnn", "./models")
+module_spec = importlib.util.spec_from_file_location("cnn", "./models/cnn.py")
 cnn = importlib.util.module_from_spec(module_spec)
 module_spec.loader.exec_module(cnn)
 ##import cnn
