@@ -6,38 +6,24 @@ from torch import nn
 # Define model - takes input as 144*144*3
 class CNNModel(nn.Module):
     def __init__(self):
-        super(CNNModel, self).__init__()
+        super(SimplifiedCNNModel, self).__init__()
         self.network = nn.Sequential(
+            nn.Conv2d(3, 16, kernel_size=3, stride=2, padding=1),  # Using stride 2 to reduce dimensions
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),  # 12x12 feature maps
             
-            nn.Conv2d(3, 32, kernel_size = 3, padding = 1),
+            nn.Conv2d(16, 32, kernel_size=3, stride=2, padding=1),  # Using stride 2 again
             nn.ReLU(),
-            nn.Conv2d(32,64, kernel_size = 3, stride = 1, padding = 1),
-            nn.ReLU(),
-            nn.MaxPool2d(2,2),
-        
-            nn.Conv2d(64, 128, kernel_size = 3, stride = 1, padding = 1),
-            nn.ReLU(),
-            nn.Conv2d(128 ,128, kernel_size = 3, stride = 1, padding = 1),
-            nn.ReLU(),
-            nn.MaxPool2d(2,2),
-            
-            nn.Conv2d(128, 256, kernel_size = 3, stride = 1, padding = 1),
-            nn.ReLU(),
-            nn.Conv2d(256,256, kernel_size = 3, stride = 1, padding = 1),
-            nn.ReLU(),
-            nn.MaxPool2d(2,2),
+            nn.MaxPool2d(2, 2),  # 3x3 feature maps
             
             nn.Flatten(),
-            nn.Linear(82944,1024),
+            nn.Linear(3 * 3 * 32, 256),  # Adjusted based on the output size of the last conv layer
             nn.ReLU(),
-            nn.Linear(1024, 512),
-            nn.ReLU(),
-            nn.Linear(512,6)
+            nn.Linear(256, 6)
         ) 
       
     def forward(self, x):
         return self.network(x)
-
 
 # Makes predictions on data and uses prediction error to modify model parameters
 
