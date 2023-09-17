@@ -117,8 +117,8 @@ def train_and_evaluate_cnn():
     test_data = CustomDataset(test_data)
 
     batch_size = 1028
-    train_dataloader = DataLoader(training_data, batch_size=batch_size, num_workers=30)
-    test_dataloader = DataLoader(test_data, batch_size=batch_size, num_workers=30)
+    train_dataloader = DataLoader(training_data, batch_size=batch_size, shuffle=True, num_workers=30)
+    test_dataloader = DataLoader(test_data, batch_size=batch_size, shuffle=True, num_workers=30)
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print("Using {} device".format(device))
