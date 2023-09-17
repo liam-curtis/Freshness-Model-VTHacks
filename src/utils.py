@@ -100,9 +100,11 @@ def load_images_as_tensors(directory, base_path="."):
 def train_and_evaluate_cnn():
     # Download training data from open datasets.
     training_data = load_images_as_tensors('Train', '/srv/freshnessmodel/dataset')
+    training_data = CustomDataset(training_data)
 
     # Download test data from open datasets.
     test_data = load_images_as_tensors('Test', '/srv/freshnessmodel/dataset')
+    test_data = CustomDataset(test_data)
 
     batch_size = 64
     train_dataloader = DataLoader(training_data, batch_size=batch_size)
