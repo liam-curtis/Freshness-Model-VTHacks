@@ -13,6 +13,18 @@ cnn = importlib.util.module_from_spec(module_spec)
 module_spec.loader.exec_module(cnn)
 ##import cnn
 
+class CustomDataset(Dataset):
+    def __init__(self, data):
+        self.data = []
+        for category, tensors in data.items():
+            for tensor in tensors:
+                self.data.append((tensor, category))
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        return self.data[idx]
 
 def display_sample_data(test_data):
     figure = plt.figure(figsize=(10, 8))
@@ -49,6 +61,9 @@ def get_loss_fn():
 def get_optimizer(model, learning_rate=1e-3):
     return torch.optim.SGD(model.parameters(), lr=learning_rate)
 
+from torch.utils.data import Dataset
+
+        
 def load_images_as_tensors(directory, base_path="."):
     # Define the transformation pipeline for the images
     transformations = transforms.Compose([
