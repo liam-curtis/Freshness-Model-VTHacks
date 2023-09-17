@@ -3,7 +3,7 @@ from PIL import Image
 import torch
 from torch import nn
 from torchvision import transforms
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, Dataset
 import importlib.util
 import matplotlib.pyplot as plt
 import sys
