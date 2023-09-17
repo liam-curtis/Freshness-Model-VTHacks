@@ -77,7 +77,8 @@ def load_images_as_tensors(directory, base_path="."):
 
     for category in categories:
         # Construct the path to the category directory
-        category_dir = os.path.join(base_path, directory, category)
+        category_dir = os.path.join(base_path, str(directory), category)
+
     
         for image_name in os.listdir(category_dir):
             image_path = os.path.join(category_dir, image_name)
