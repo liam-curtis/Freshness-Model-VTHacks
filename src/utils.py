@@ -17,7 +17,7 @@ module_spec.loader.exec_module(cnn)
 class CustomDataset(Dataset):
     def __init__(self, data):
         self.data = []
-        categories = ['freshapples', 'freshbanana', 'freshcucumber', 'freshokra', 'freshoranges', 
+        self.categories = ['freshapples', 'freshbanana', 'freshcucumber', 'freshokra', 'freshoranges', 
                   'freshpotato', 'freshtomato', 'rottenapples', 'rottenbanana', 'rottencucumber', 
                   'rottenokra', 'rottenoranges', 'rottenpotato', 'rottentomato']
         for category, tensors in data.items():
