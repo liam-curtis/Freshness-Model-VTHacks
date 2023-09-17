@@ -88,7 +88,7 @@ def load_images_as_tensors(directory, base_path="."):
             image_path = os.path.join(category_dir, image_name)
             
             # Open and transform the image
-            image = Image.open(image_path)
+            image = Image.open(image_path).convert("RGB")  # Convert image to RGB format
             tensor_image = transformations(image)
             
             # Append the tensor to the appropriate list
