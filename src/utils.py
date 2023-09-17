@@ -77,7 +77,7 @@ def get_loss_fn():
     return nn.CrossEntropyLoss()
 
 
-def get_optimizer(model, learning_rate=5e4):
+def get_optimizer(model, learning_rate=1e3):
     return torch.optim.SGD(model.parameters(), lr=learning_rate)
 
 from torch.utils.data import Dataset
@@ -148,7 +148,7 @@ def train_and_evaluate_cnn():
     test_data = load_images_as_tensors('Test', '/srv/freshnessmodel/dataset')
     test_data = CustomDataset(test_data)
 
-    batch_size = 2048
+    batch_size = 256
     train_dataloader = DataLoader(training_data, batch_size=batch_size)
     test_dataloader = DataLoader(test_data, batch_size=batch_size)
 
@@ -159,7 +159,7 @@ def train_and_evaluate_cnn():
     print(model)
 
     loss_fn = get_loss_fn()
-    learning_rate = 5e-4
+    learning_rate = 1e3
     optimizer = get_optimizer(model, learning_rate)
 
     epochs = 7
