@@ -72,7 +72,7 @@ def get_variable_name(variable, local_vars):
 
 def save_model(model):
     model_name = get_variable_name(model, locals())
-    path = f"/srv/freshnessmodel/{model_name}.pth"
+    path = f"/srv/freshnessmodel/model.pth"
     torch.save(model.state_dict(), path)
     print(f"Saved PyTorch Model State to {path}")
 
@@ -156,7 +156,7 @@ def train_and_evaluate_cnn():
     test_data = load_images_as_tensors('Test', '/srv/freshnessmodel/dataset')
     test_data = CustomDataset(test_data)
 
-    batch_size = 128
+    batch_size = 256
     train_dataloader = DataLoader(training_data, batch_size=batch_size)
     test_dataloader = DataLoader(test_data, batch_size=batch_size)
 
