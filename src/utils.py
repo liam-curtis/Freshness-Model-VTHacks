@@ -92,7 +92,7 @@ def load_images_as_tensors(directory, base_path="."):
             image_path = os.path.join(category_dir, image_name)
             
             # Read the image
-            image = cv2.imread(category_dir, cv2.IMREAD_UNCHANGED)  # IMREAD_UNCHANGED ensures we preserve the alpha channel
+            image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)  # IMREAD_UNCHANGED ensures we preserve the alpha channel
 
             # Convert from RGBA to RGB
             rgb_image = cv2.cvtColor(image, cv2.COLOR_BGRA2RGB)
