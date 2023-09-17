@@ -91,13 +91,13 @@ def load_images_as_tensors(directory, base_path="."):
         for image_name in os.listdir(category_dir):
             image_path = os.path.join(category_dir, image_name)
             
-            # Read the image
-            image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)  # IMREAD_UNCHANGED ensures we preserve the alpha channel
+             # Read the image using PIL
+            pil_image = Image.open(image_path)
 
-            # Convert from RGBA to RGB
-            rgb_image = cv2.cvtColor(image, cv2.COLOR_BGRA2RGB)
-            l_image = Image.fromarray(rgb_image)
-            tensor_image = transformations(l_image)
+            # If the image has an alpha channel (is RGBA), convert it to RGB
+            if pil_image.mode == 'RGBA':
+                pil_image = pil_image.convert('RGB')
+                tensor_image = transformations(pil_image)
             
             # Append the tensor to the appropriate list
             data[category].append(tensor_image)
