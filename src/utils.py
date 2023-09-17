@@ -170,6 +170,6 @@ def train_and_evaluate_cnn():
     print("Done!")
 
     path = "/srv/freshnessmodel/VTHacks/model.pth"
-    torch.save(model, path)
+    torch.save(model.state_dict(), path)
 
     return model
