@@ -77,7 +77,7 @@ def get_loss_fn():
     return nn.CrossEntropyLoss()
 
 
-def get_optimizer(model, learning_rate=2e-3):
+def get_optimizer(model, learning_rate=1e-3):
     return torch.optim.SGD(model.parameters(), lr=learning_rate)
 
 from torch.utils.data import Dataset
