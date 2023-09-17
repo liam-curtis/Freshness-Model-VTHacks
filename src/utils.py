@@ -123,7 +123,7 @@ def train_and_evaluate_cnn():
     epochs = 15
     for t in range(epochs):
         print(f"Epoch {t+1}\n-------------------------------")
-        cnn.train(train_dataloader, model, loss_fn, optimizer)
+        cnn.train(train_dataloader, model, loss_fn, optimizer, device)
         cnn.test(test_dataloader, model)
     print("Done!")
 
