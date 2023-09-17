@@ -36,9 +36,8 @@ class CNNModel(nn.Module):
         ) 
       
     def forward(self, x):
-        x = self.flatten(x)
-        logits = self.linear_relu_stack(x)
-        return logits
+        return self.network(x)
+
 
 # Makes predictions on data and uses prediction error to modify model parameters
 
