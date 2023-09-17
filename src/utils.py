@@ -90,7 +90,7 @@ def get_optimizer(model, learning_rate=2e-3):
 
 from torch.utils.data import Dataset
 
-def load_image_as_tensor(image):
+def load_image_as_tensor(pil_image):
     # Define the transformation pipeline for the images
     transformations = transforms.Compose([
         transforms.Resize((144, 144)),  # Resize to 144x144

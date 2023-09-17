@@ -7,13 +7,32 @@ from wtforms.validators import InputRequired
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from sqlalchemy import text
+from PIL import Image
+from utils import load_image_as_tensor, predict_image
+import torch
+import torch.nn as nn
+import sys
+import importlib.util
+
+# Specify the path to the module
+module_path = "./models/cnn.py"
+
+# Create a module spec from the file location
+module_spec = importlib.util.spec_from_file_location("cnn", module_path)
+
+# Create and load the module
+cnn = importlib.util.module_from_spec(module_spec)
+module_spec.loader.exec_module(cnn)
+
+# Access the CNNModel class from the loaded module
+from cnn import CNNModel
  
 # WSGI Application
 # Provide template folder name
 # The default folder name should be "templates" else need to mention custom folder name
 app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
 app.config['SECRET_KEY'] = 'supersecretkey'
-app.config['UPLOAD_FOLDER'] = 'testing'
+app.config['UPLOAD_FOLDER'] = 'images'
  
 # Configure the database connection URI
 #db_password = os.environ.get('DATABASE_PASSWORD')
@@ -27,6 +46,8 @@ cursor = db.session.connection()
 class UploadFileForm(FlaskForm):
     file = FileField("File", validators=[InputRequired()])
     submit = SubmitField("Upload File")
+
+model = CNNModel()
 
 @app.route('/', methods=['GET',"POST"])
 @app.route('/home', methods=['GET',"POST"])
@@ -59,7 +80,12 @@ def upload():
     if form.validate_on_submit():
         file = form.file.data # First grab the file
         file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename))) # Then save the file
-        return render_template('success.html')
+        uploaded_filename = secure_filename(file.filename)
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_filename)
+        pil_image = load_image_as_tensor(Image.open(image_path))
+        model.load_state_dict(torch.load('model.pth'))
+        message = predict_image(model, pil_image)
+        return render_template('success.html', message=message, image_path=image_path)
     return render_template('upload.html', form=form)
 
 @app.route('/about_us')

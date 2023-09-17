@@ -9,4 +9,5 @@ Features:
  - Profile system with username, password, and email.
  - Encrypted password protection in MySQL Database.
  - Quick classifacation system for images of produce to detect if they are fresh or rotten.
+ - Works with the following produce: apple, banana, cucumber, okra, orange, potato, & tomato
    
