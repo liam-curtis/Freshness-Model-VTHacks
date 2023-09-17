@@ -10,14 +10,14 @@ class CNNModel(nn.Module):
         self.network = nn.Sequential(
             nn.Conv2d(3, 16, kernel_size=3, stride=2, padding=1),  # Using stride 2 to reduce dimensions
             nn.ReLU(),
-            nn.MaxPool2d(2, 2),  # 12x12 feature maps
+            nn.MaxPool2d(2, 2),  # 36x36 feature maps
             
             nn.Conv2d(16, 32, kernel_size=3, stride=2, padding=1),  # Using stride 2 again
             nn.ReLU(),
-            nn.MaxPool2d(2, 2),  # 3x3 feature maps
+            nn.MaxPool2d(2, 2),  # 9x9 feature maps
             
             nn.Flatten(),
-            nn.Linear(3 * 3 * 32, 256),  # Adjusted based on the output size of the last conv layer
+            nn.Linear(9 * 9 * 32, 256),  # Adjusted based on the output size of the last conv layer
             nn.ReLU(),
             nn.Linear(256, 2)
         ) 
