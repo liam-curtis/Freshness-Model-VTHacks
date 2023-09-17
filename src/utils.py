@@ -156,9 +156,9 @@ def train_and_evaluate_cnn():
     test_data = load_images_as_tensors('Test', '/srv/freshnessmodel/dataset')
     test_data = CustomDataset(test_data)
 
-    batch_size = 128
-    train_dataloader = DataLoader(training_data, batch_size=batch_size, shuffle=True, num_workers=12)
-    test_dataloader = DataLoader(test_data, batch_size=batch_size, shuffle=True, num_workers=12)
+    batch_size = 64
+    train_dataloader = DataLoader(training_data, batch_size=batch_size)
+    test_dataloader = DataLoader(test_data, batch_size=batch_size)
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print("Using {} device".format(device))
@@ -170,7 +170,7 @@ def train_and_evaluate_cnn():
     learning_rate = 2e-3
     optimizer = get_optimizer(model, learning_rate)
 
-    epochs = 15
+    epochs = 7
     for t in range(epochs):
         print(f"Epoch {t+1}\n-------------------------------")
         cnn.train(train_dataloader, model, loss_fn, optimizer, device)
