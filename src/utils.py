@@ -70,33 +70,43 @@ from torch.utils.data import Dataset
 
         
 def load_images_as_tensors(directory, base_path="."):
-    # Numeric categories corresponding to fresh or rotten
-    categories = [1, 2]
+    # Define the transformation pipeline for the images
+    transformations = transforms.Compose([
+        transforms.Resize((50, 50)),  # Resize to 144x144
+        transforms.ToTensor(),
+        # Add any other transformations you need
+    ])
+
+    # Fruit categories
+    categories = ['freshapples', 'freshbanana', 'freshcucumber', 'freshokra', 'freshoranges', 
+                  'freshpotato', 'freshtomato', 'rottenapples', 'rottenbanana', 'rottencucumber', 
+                  'rottenokra', 'rottenoranges', 'rottenpotato', 'rottentomato']
 
     data = {'rotten': [], 'fresh': []}
 
     for category in categories:
         # Construct the path to the category directory
-        category_dir = os.path.join(base_path, str(directory), str(category))
-
-    
+        category_dir = os.path.join(base_path, directory, category)
+        
+        # Iterate through each image in the category directory
         for image_name in os.listdir(category_dir):
             image_path = os.path.join(category_dir, image_name)
-        
-            # Read the image using PIL
+            
+             # Read the image using PIL
             pil_image = Image.open(image_path)
 
             # If the image has an alpha channel (is RGBA), convert it to RGB
             if pil_image.mode == 'RGBA':
                 pil_image = pil_image.convert('RGB')
             tensor_image = transformations(pil_image)
-        
+            
             # Append the tensor to the appropriate list
             if "rotten" in category:
-                data[0].append(tensor_image)
+                data['rotten'].append(tensor_image)
             else:
-                data[1].append(tensor_image)
-        return data
+                data['fresh'].append(tensor_image)
+
+    return data
 
 
 
