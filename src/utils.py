@@ -23,8 +23,6 @@ class CustomDataset(Dataset):
             for tensor in tensors:
                 self.data.append((tensor, label))
 
-
-
     def __len__(self):
         return len(self.data)
 
@@ -141,10 +139,10 @@ def train_and_evaluate_cnn():
     print("Done!")
 
     model_name = get_variable_name(model, locals())
-    path = f"/srv/freshnessmodel/{model_name}.pth"
+    path = f"/srv/freshnessmodel/VTHacks/{model_name}.pth"
     save_model(model)
 
     model = cnn.CNNModel()
-    #load_model(model, path)
+    load_model(model, path)
 
     return model
