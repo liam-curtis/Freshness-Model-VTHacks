@@ -77,7 +77,7 @@ def get_loss_fn():
     return nn.CrossEntropyLoss()
 
 
-def get_optimizer(model, learning_rate=1e3):
+def get_optimizer(model, learning_rate=1e-3):
     return torch.optim.SGD(model.parameters(), lr=learning_rate)
 
 from torch.utils.data import Dataset
@@ -159,7 +159,7 @@ def train_and_evaluate_cnn():
     print(model)
 
     loss_fn = get_loss_fn()
-    learning_rate = 1e3
+    learning_rate = 1e-3
     optimizer = get_optimizer(model, learning_rate)
 
     epochs = 7
