@@ -132,7 +132,7 @@ def load_images_as_tensors(directory, base_path="."):
             # Append the tensor to the appropriate list
             if "rotten" in category:
                 data['rotten'].append(tensor_image)
-            else if "fresh" in category:
+            elif "fresh" in category:
                 data['fresh'].append(tensor_image)
 
     return data
