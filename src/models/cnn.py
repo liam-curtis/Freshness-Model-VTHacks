@@ -6,7 +6,7 @@ from torch import nn
 # Define model - takes input as 144*144*3
 class CNNModel(nn.Module):
     def __init__(self):
-        super(SimplifiedCNNModel, self).__init__()
+        super(CNNModel, self).__init__()
         self.network = nn.Sequential(
             nn.Conv2d(3, 16, kernel_size=3, stride=2, padding=1),  # Using stride 2 to reduce dimensions
             nn.ReLU(),
