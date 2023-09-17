@@ -42,7 +42,7 @@ class CNNModel(nn.Module):
 
 # Makes predictions on data and uses prediction error to modify model parameters
 
-def train(dataloader, model, loss_fn, optimizer):
+def train(dataloader, model, loss_fn, optimizer, device):
     size = len(dataloader.dataset)
     for batch, (X, y) in enumerate(dataloader):
         X, y = X.to(device), y.to(device)
