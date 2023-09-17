@@ -99,7 +99,7 @@ def load_images_as_tensors(directory, base_path="."):
             # If the image has an alpha channel (is RGBA), convert it to RGB
             if pil_image.mode == 'RGBA':
                 pil_image = pil_image.convert('RGB')
-                tensor_image = transformations(pil_image)
+            tensor_image = transformations(pil_image)
             
             # Append the tensor to the appropriate list
             data[category].append(tensor_image)
