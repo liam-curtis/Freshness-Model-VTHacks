@@ -36,7 +36,7 @@ app.config['UPLOAD_FOLDER'] = 'images'
  
 # Configure the database connection URI
 #db_password = os.environ.get('DATABASE_PASSWORD')
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://davidjdeg2:Snowden37606!@70.161.68.15/Website_DB'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql://username:password@7ip/table_name'
 
 # Create a SQLAlchemy instance
 db = SQLAlchemy(app)
